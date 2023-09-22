@@ -1,12 +1,24 @@
 package com.gradesubmission.studentportal.entity;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
+@Entity
+@Table(name="student")
 public class Student {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
     private Long id;
+    @Column(name="name", nullable = false)
     private String name;
+    @Column(name="birth_date", nullable = false)
     private LocalDate birthDate;
+
+    public Student() {};
 
     public Student(Long id, String name, LocalDate birthDate) {
         this.id = id;

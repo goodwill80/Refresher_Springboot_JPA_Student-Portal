@@ -1,9 +1,11 @@
 package com.gradesubmission.studentportal.service;
 
 import com.gradesubmission.studentportal.entity.Grade;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class GradeServiceImp implements GradeService {
     @Override
     public Grade getGrade(Long studentId, Long courseId) {
