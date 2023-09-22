@@ -1,33 +1,21 @@
 package com.gradesubmission.studentportal.entity;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
 
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Table(name="grade")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
 public class Grade {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
     private Long id;
+    @Column(name="score")
     private String score;
-
-    public Grade(Long id, String score) {
-        this.id = id;
-        this.score = score;
-    }
-
-    public Long getId() {
-        return this.id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getScore() {
-        return this.score;
-    }
-
-    public void setScore(String score) {
-        this.score = score;
-    }
-
 }

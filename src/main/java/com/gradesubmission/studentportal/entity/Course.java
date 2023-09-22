@@ -1,62 +1,34 @@
 package com.gradesubmission.studentportal.entity;
 
+import jakarta.persistence.*;
+import lombok.*;
+import org.springframework.boot.autoconfigure.web.WebProperties;
+
 import java.util.Objects;
 
+@Entity
+@Table(name="course")
+@Getter
+@Setter
+@NoArgsConstructor
+@RequiredArgsConstructor
+@EqualsAndHashCode
 public class Course {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
     private Long id;
+
+    @Column(name="subject", nullable = false)
+    @NonNull
     private String subject;
+
+    @Column(name="code", nullable = false)
+    @NonNull
     private String code;
+
+    @Column(name="description", nullable = false)
+    @NonNull
     private String description;
 
-    public Course(Long id, String subject, String code, String description) {
-        this.id = id;
-        this.subject = subject;
-        this.code = code;
-        this.description = description;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Course course = (Course) o;
-        return Objects.equals(id, course.id) && Objects.equals(subject, course.subject) && Objects.equals(code, course.code) && Objects.equals(description, course.description);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, subject, code, description);
-    }
 }
