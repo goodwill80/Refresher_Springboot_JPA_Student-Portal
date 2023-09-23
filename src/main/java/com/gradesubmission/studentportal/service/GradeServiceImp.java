@@ -22,20 +22,17 @@ public class GradeServiceImp implements GradeService {
     StudentRepository studentRepository;
     CourseRepository courseRepository;
 
+
     @Override
     public Grade getGrade(Long studentId, Long courseId) {
         Optional<Grade> grade = gradeRepository.findByStudentIdAndCourseId(studentId, courseId);
-        if(grade.isPresent()) {
-            return grade.get();
-        } else {
-            throw new GradeNotFoundException();
-        }
+        return unwrapGrade(grade);
     }
 
     @Override
     public Grade saveGrade(Grade grade, Long studentId, Long courseId) {
-        Student student = studentRepository.findById(studentId).get();
-        Course course = courseRepository.findById(courseId).get();
+        Student student = StudentServiceImp.unwrapStudent(studentRepository.findById(studentId), studentId);
+        Course course = CourseServiceImp.unwrapCourse(courseRepository.findById(courseId), courseId);
         grade.setStudent(student);
         grade.setCourse(course);
         return gradeRepository.save(grade);
@@ -44,14 +41,9 @@ public class GradeServiceImp implements GradeService {
     @Override
     public Grade updateGrade(String score, Long studentId, Long courseId) {
         Optional<Grade> grade = gradeRepository.findByStudentIdAndCourseId(studentId, courseId);
-        if(grade.isPresent()) {
-            Grade foundGrade = grade.get();
-            foundGrade.setScore(score);
-            return gradeRepository.save(foundGrade);
-        } else {
-            throw new GradeNotFoundException();
-        }
-
+        Grade foundGrade = unwrapGrade(grade);
+        foundGrade.setScore(score);
+        return gradeRepository.save(foundGrade);
     }
 
     @Override
@@ -72,5 +64,10 @@ public class GradeServiceImp implements GradeService {
     @Override
     public List<Grade> getAllGrades() {
         return (List<Grade>) gradeRepository.findAll();
+    }
+
+    static Grade unwrapGrade(Optional<Grade> entity) {
+        if (entity.isPresent()) return entity.get();
+        else throw new GradeNotFoundException();
     }
 }
