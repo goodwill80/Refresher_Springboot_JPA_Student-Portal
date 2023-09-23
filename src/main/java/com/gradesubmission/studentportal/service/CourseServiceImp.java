@@ -1,11 +1,13 @@
 package com.gradesubmission.studentportal.service;
 
 import com.gradesubmission.studentportal.entity.Course;
+import com.gradesubmission.studentportal.exception.CourseNotFoundException;
 import com.gradesubmission.studentportal.repository.CourseRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -15,7 +17,12 @@ public class CourseServiceImp implements CourseService {
 
     @Override
     public Course getCourseById(Long id) {
-        return courseRepository.findById(id).get();
+        Optional<Course> course = courseRepository.findById(id);
+        if(course.isPresent()) {
+            return course.get();
+        } else {
+            throw new CourseNotFoundException(id);
+        }
     }
 
     @Override

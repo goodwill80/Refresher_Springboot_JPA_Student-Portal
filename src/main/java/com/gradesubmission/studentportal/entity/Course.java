@@ -25,7 +25,8 @@ public class Course {
     @NonNull // For requiredArgsConstructor
     private String subject;
 
-    @Column(name="code", nullable = false)
+    // No 2 courses can have the same code
+    @Column(name="code", nullable = false, unique = true)
     @NonNull // For requiredArgsConstructor
     private String code;
 

@@ -5,7 +5,10 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name="grade")
+// Every Student id and Course id pair needs to be unique
+@Table(name="grade", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"student_id", "course_id"})
+})
 @Getter
 @Setter
 @NoArgsConstructor

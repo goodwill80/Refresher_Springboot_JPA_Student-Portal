@@ -2,6 +2,7 @@ package com.gradesubmission.studentportal.service;
 
 import com.gradesubmission.studentportal.entity.Grade;
 import com.gradesubmission.studentportal.entity.Student;
+import com.gradesubmission.studentportal.exception.StudentNotFoundException;
 import com.gradesubmission.studentportal.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,11 @@ public class StudentServiceImp implements StudentService {
     @Override
     public Student getStudentById(Long id) {
         Optional<Student> student = studentRepository.findById(id);
-        return student.get();
+        if(student.isPresent()) {
+            return student.get();
+        } else {
+            throw new StudentNotFoundException(id);
+        }
     }
 
     @Override
