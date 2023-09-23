@@ -2,6 +2,7 @@ package com.gradesubmission.studentportal.entity;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Entity
@@ -21,6 +22,7 @@ public class Grade {
     private Long id;
 
     @Column(name="score")
+    @NotBlank(message="score cannot be blank")
     private String score;
 
     // Many grades can have only one student
