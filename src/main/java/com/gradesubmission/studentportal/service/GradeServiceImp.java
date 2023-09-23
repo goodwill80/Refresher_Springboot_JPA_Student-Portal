@@ -1,25 +1,44 @@
 package com.gradesubmission.studentportal.service;
 
+import com.gradesubmission.studentportal.entity.Course;
 import com.gradesubmission.studentportal.entity.Grade;
+import com.gradesubmission.studentportal.entity.Student;
+import com.gradesubmission.studentportal.repository.CourseRepository;
+import com.gradesubmission.studentportal.repository.GradeRepository;
+import com.gradesubmission.studentportal.repository.StudentRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class GradeServiceImp implements GradeService {
+
+
+    GradeRepository gradeRepository;
+    StudentRepository studentRepository;
+    CourseRepository courseRepository;
+
     @Override
     public Grade getGrade(Long studentId, Long courseId) {
-        return null;
+        return gradeRepository.findByStudentIdAndCourseId(studentId, courseId);
     }
 
     @Override
     public Grade saveGrade(Grade grade, Long studentId, Long courseId) {
-        return null;
+        Student student = studentRepository.findById(studentId).get();
+        Course course = courseRepository.findById(courseId).get();
+        grade.setStudent(student);
+        grade.setCourse(course);
+        return gradeRepository.save(grade);
     }
 
     @Override
     public Grade updateGrade(String score, Long studentId, Long courseId) {
-        return null;
+        Grade grade = gradeRepository.findByStudentIdAndCourseId(studentId, courseId);
+        grade.setScore(score);
+        return gradeRepository.save(grade);
     }
 
     @Override

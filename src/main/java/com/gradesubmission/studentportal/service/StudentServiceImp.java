@@ -1,5 +1,6 @@
 package com.gradesubmission.studentportal.service;
 
+import com.gradesubmission.studentportal.entity.Grade;
 import com.gradesubmission.studentportal.entity.Student;
 import com.gradesubmission.studentportal.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,9 @@ public class StudentServiceImp implements StudentService {
 
     @Override
     public List<Student> getAllStudents() {
+
         return (List<Student>) studentRepository.findAll();
     }
+
+
 }

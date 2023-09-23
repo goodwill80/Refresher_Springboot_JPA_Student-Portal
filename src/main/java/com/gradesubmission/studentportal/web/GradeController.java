@@ -1,7 +1,9 @@
 package com.gradesubmission.studentportal.web;
 
 import com.gradesubmission.studentportal.entity.Grade;
+import com.gradesubmission.studentportal.service.GradeService;
 import org.apache.coyote.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,19 +14,22 @@ import java.util.List;
 @RequestMapping("/grade")
 public class GradeController {
 
+    @Autowired
+    GradeService gradeService;
+
     @GetMapping("/student/{studentId}/course/{courseId}")
     public ResponseEntity<Grade> getGrade(@PathVariable Long studentId, @PathVariable Long courseId) {
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(gradeService.getGrade(studentId, courseId), HttpStatus.OK);
     }
 
     @PostMapping("/student/{studentId}/course/{courseId}")
     public ResponseEntity<Grade> saveGrade(@PathVariable Long studentId, @PathVariable Long courseId, @RequestBody Grade grade) {
-        return new ResponseEntity<>(grade, HttpStatus.CREATED);
+        return new ResponseEntity<>(gradeService.saveGrade(grade, studentId, courseId), HttpStatus.CREATED);
     }
 
     @PutMapping("/student/{studentId}/course/{courseId}")
     public ResponseEntity<Grade> updateGrade(@PathVariable Long studentId, @PathVariable Long courseId, @RequestBody Grade grade) {
-        return new ResponseEntity<>(grade, HttpStatus.OK);
+        return new ResponseEntity<>(gradeService.updateGrade(grade.getScore(), studentId, courseId), HttpStatus.OK);
     }
 
     @DeleteMapping("/student/{studentId}/course/{courseId}")

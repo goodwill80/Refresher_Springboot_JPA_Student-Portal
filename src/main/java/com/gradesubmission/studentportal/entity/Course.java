@@ -1,9 +1,11 @@
 package com.gradesubmission.studentportal.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.boot.autoconfigure.web.WebProperties;
 
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -20,15 +22,18 @@ public class Course {
     private Long id;
 
     @Column(name="subject", nullable = false)
-    @NonNull
+    @NonNull // For requiredArgsConstructor
     private String subject;
 
     @Column(name="code", nullable = false)
-    @NonNull
+    @NonNull // For requiredArgsConstructor
     private String code;
 
     @Column(name="description", nullable = false)
     @NonNull
     private String description;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    private List<Grade> grades;
 }

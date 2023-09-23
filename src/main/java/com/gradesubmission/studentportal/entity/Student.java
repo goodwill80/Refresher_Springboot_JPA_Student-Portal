@@ -1,9 +1,11 @@
 package com.gradesubmission.studentportal.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -29,5 +31,12 @@ public class Student {
     private LocalDate birthDate;
 
 
+    // bidirectional
+    // mapped by -  'student' object name in the object table with foreign key
+    // JsonIgnore to ignore the infinite looping of foreign key object
+    // Cascade - any deletion of the parent, will also remove the related child objects
+    @JsonIgnore
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    private List<Grade> grades;
 
 }
